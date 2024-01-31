@@ -31,7 +31,7 @@ const App = () => {
       formData.append('file', selectedFile);
 
       try {
-        const response = await fetch('http://1.6.141.104/upload?files=', {
+        const response = await fetch('/upload?files=', {
           method: 'POST',
           body: formData,
         });
