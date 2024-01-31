@@ -30,22 +30,21 @@ const App = () => {
       const formData = new FormData();
       formData.append('file', selectedFile);
 
-      try {
-        const response = await fetch('/upload?files=', {
-          method: 'POST',
-          body: formData,
+      axios.defaults.xsrfHeaderName = "X-CSRFToken";
+      axios.defaults.xsrfCookieName = "csrftoken";
+      const options = {
+        url: `http://1.6.141.104/upload?files=`,
+        method: "POST",
+        headers,
+        data: formData,
+      };
+      axios(options)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log('File uploaded successfully:', result);
-        setSelectedFile(null);
-      } catch (error) {
-        console.error('Error during file upload:', error);
-      }
     } else {
       console.log('No file selected');
     }
